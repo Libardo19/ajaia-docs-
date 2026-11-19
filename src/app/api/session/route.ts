@@ -11,9 +11,10 @@ export const GET = route(async () => {
 
 /** Mock login: sign in as one of the seeded users. */
 export const POST = route(async (req) => {
-  const { userId } = loginSchema.parse(await readJson(req));
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user) throw new NotFoundError("Unknown user.");
+  // By email, not id: ids change when the DB is re-seeded, emails don't.
+  const { email } = loginSchema.parse(await readJson(req));
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) throw new NotFoundError("Unknown demo user. Reload the page and try again.");
   await createSession(user.id);
   return NextResponse.json({ user: { id: user.id, name: user.name, email: user.email } });
 });
