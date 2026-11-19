@@ -18,14 +18,15 @@ No passwords. Pick a user on the login page and use **Switch** in the header to 
 
 | Item | Location |
 | --- | --- |
-| Source code | `src/`, `prisma/`, `tests/`, config files |
+| Source code | `ajaia-docs-source.zip` in the Drive folder (same as the GitHub repo): `src/`, `prisma/`, `tests/`, config files |
 | Setup and run instructions | [`README.md`](README.md) |
 | Architecture note | [`ARCHITECTURE.md`](ARCHITECTURE.md) |
 | AI workflow note | [`AI_WORKFLOW.md`](AI_WORKFLOW.md) |
 | Automated tests | `tests/access.test.ts`, `tests/convert.test.ts` (run with `npm test`) |
 | Sample import files | `samples/product-brief.md`, `samples/meeting-notes.txt`, `samples/quarterly-planning.docx` |
 | Video URL | [`VIDEO_URL.txt`](VIDEO_URL.txt) |
-| Screenshots | `screenshots/` |
+| Screenshots | `screenshots/`: 10 PNGs from a scripted browser walkthrough of the live app |
+| In-app explainer | The document "How Ajaia Docs meets the assignment" in the live app, co-written by all three demo users (sign in as Alice) |
 
 ## Status
 

@@ -18,6 +18,8 @@ Authentication is mocked on purpose. The login page lists three seeded users; cl
 | Bob Builder | `bob@ajaia.test` | Has **edit** access to Alice's welcome doc |
 | Carol Critic | `carol@ajaia.test` | Has **view-only** access to Alice's welcome doc; owns "Carol's review notes" |
 
+**Start here:** sign in as Alice and open **"How Ajaia Docs meets the assignment"**. It is a document co-written in the app by all three users. Alice owns it, Bob added sections as an editor, and Carol wrote hers as an editor before being switched to view only. It walks through every requirement of the brief.
+
 **Suggested 2-minute review path**
 1. Sign in as **Alice**. Open the welcome doc and change some formatting. The header shows *Saved*.
 2. Reload the page. Content and formatting are still there.
