@@ -1,0 +1,6 @@
+Weekly sync - notes
+
+Plain text files become one paragraph per blank-line-separated block.
+Single line breaks are kept inside the paragraph.
+
+Action items: finish sharing dialog, write README.
