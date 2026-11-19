@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db";
+import { sessionService } from "@/server/services/session.service";
 import { LoginPicker } from "@/components/LoginPicker";
 import { FileText } from "lucide-react";
 
@@ -10,10 +10,7 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string }>;
 }) {
   const { next } = await searchParams;
-  const users = await prisma.user.findMany({
-    orderBy: { name: "asc" },
-    select: { id: true, name: true, email: true, color: true },
-  });
+  const users = await sessionService.listDemoUsers();
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4">

@@ -1,25 +1,6 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/server/db";
-import { createSession, destroySession, getCurrentUser } from "@/server/session";
-import { readJson, route } from "@/server/http";
-import { loginSchema } from "@/lib/validation";
-import { NotFoundError } from "@/lib/errors";
+import { sessionController } from "@/server/controllers/session.controller";
+import { withErrors } from "@/server/middlewares/with-errors";
 
-export const GET = route(async () => {
-  return NextResponse.json({ user: await getCurrentUser() });
-});
-
-/** Mock login: sign in as one of the seeded users. */
-export const POST = route(async (req) => {
-  // By email, not id: ids change when the DB is re-seeded, emails don't.
-  const { email } = loginSchema.parse(await readJson(req));
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new NotFoundError("Unknown demo user. Reload the page and try again.");
-  await createSession(user.id);
-  return NextResponse.json({ user: { id: user.id, name: user.name, email: user.email } });
-});
-
-export const DELETE = route(async () => {
-  await destroySession();
-  return new NextResponse(null, { status: 204 });
-});
+export const GET = withErrors(sessionController.me);
+export const POST = withErrors(sessionController.signIn);
+export const DELETE = withErrors(sessionController.signOut);
