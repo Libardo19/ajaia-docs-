@@ -5,6 +5,16 @@
 - **Claude Code** (Claude Opus, in the terminal and VS Code) was the main pair programmer. I used it for planning, scaffolding, writing code and tests, and running the build and test loop.
 - I used no other AI tools. Library docs (Tiptap 3, Prisma, Next 15) were checked against the installed package types, not taken from memory.
 
+## How I split the work
+
+The brief allows AI tools and sets a 4–6 hour timebox. To ship a full-stack slice that works end to end in that time, I deliberately let Claude Code write most of the implementation. I kept for myself the parts that decide whether the product is any good:
+
+- **Product and scope:** which flows to build in depth and which to cut, and why (see `ARCHITECTURE.md`).
+- **Architecture and stack:** a single Next.js app, Supabase Postgres with Prisma, mocked seeded users, and the four-layer server (controllers → services → repositories, plus middlewares).
+- **UX calls:** conflict handling instead of silent overwrites, Gmail-style sharing suggestions, and view-only mode for viewers.
+- **Delivery discipline:** small commits and PRs, review of every change, and stopping the agent when something was unclear.
+- **Verification:** nothing was accepted on trust. Every claim in this note was checked with tests, logs or a browser run (see below).
+
 ## Where AI materially sped things up
 
 - **Scoping, before any code.** I had it turn the open brief into a time-boxed plan with explicit cuts. Cut: real-time editing and real auth. Kept: optimistic concurrency, so the "no real-time" cut stays safe. I approved the plan before code was written.
