@@ -4,7 +4,7 @@ import { AppError } from "@/lib/errors";
 
 export type ApiError = { error: { code: string; message: string; details?: unknown } };
 
-/** Maps any thrown error to a consistent JSON error response. */
+/** Maps any thrown error to the API's single error shape. */
 export function toErrorResponse(err: unknown) {
   if (err instanceof AppError) {
     return NextResponse.json<ApiError>(
@@ -32,9 +32,10 @@ export function toErrorResponse(err: unknown) {
   );
 }
 
-type Handler<C> = (req: Request, ctx: C) => Promise<Response>;
+export type Handler<C> = (req: Request, ctx: C) => Promise<Response>;
 
-export function route<C>(handler: Handler<C>): Handler<C> {
+/** Outermost middleware: nothing a controller throws escapes as an HTML 500. */
+export function withErrors<C>(handler: Handler<C>): Handler<C> {
   return async (req, ctx) => {
     try {
       return await handler(req, ctx);
@@ -42,12 +43,4 @@ export function route<C>(handler: Handler<C>): Handler<C> {
       return toErrorResponse(err);
     }
   };
-}
-
-export async function readJson(req: Request): Promise<unknown> {
-  try {
-    return await req.json();
-  } catch {
-    throw new AppError("Request body must be valid JSON.", 400, "bad_request");
-  }
 }

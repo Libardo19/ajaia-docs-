@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/server/session";
-import { listDocumentsForUser } from "@/server/documents";
+import { sessionService } from "@/server/services/session.service";
+import { documentService } from "@/server/services/document.service";
 import { AppHeader } from "@/components/AppHeader";
 import { DashboardActions } from "@/components/DashboardActions";
 import { DocumentList } from "@/components/DocumentList";
@@ -8,9 +8,9 @@ import { DocumentList } from "@/components/DocumentList";
 export const dynamic = "force-dynamic";
 
 export default async function Dashboard() {
-  const user = await getCurrentUser();
+  const user = await sessionService.currentUser();
   if (!user) redirect("/login");
-  const { owned, shared } = await listDocumentsForUser(user.id);
+  const { owned, shared } = await documentService.listForUser(user.id);
 
   return (
     <>

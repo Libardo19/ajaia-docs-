@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { JSONContent } from "@tiptap/core";
-import { docToMarkdown, fileToDocument } from "@/server/convert";
+import { docToMarkdown, fileToDocument } from "@/server/lib/convert";
 import { AppError } from "@/lib/errors";
 
 const types = (doc: JSONContent) => (doc.content ?? []).map((n) => n.type);
