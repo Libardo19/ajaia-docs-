@@ -1,5 +1,5 @@
 import { PrismaClient, type Prisma } from "@prisma/client";
-import { htmlToDoc } from "../src/server/convert";
+import { htmlToDoc } from "../src/server/lib/convert";
 
 const prisma = new PrismaClient();
 
