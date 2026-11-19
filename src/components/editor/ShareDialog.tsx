@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { api } from "@/lib/api-client";
 import { Avatar } from "../Avatar";
+import { EmailAutocomplete } from "./EmailAutocomplete";
 
 type ShareRole = "VIEWER" | "EDITOR";
 type Person = { id: string; name: string; email: string; color: string };
@@ -117,22 +118,7 @@ export function ShareDialog({
 
         {canManage ? (
           <form onSubmit={grant} className="flex flex-col gap-2 sm:flex-row">
-            <input
-              list="share-directory"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Add people by email"
-              aria-label="Email"
-              className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-            />
-            <datalist id="share-directory">
-              {suggestions.map((p) => (
-                <option key={p.id} value={p.email}>
-                  {p.name}
-                </option>
-              ))}
-            </datalist>
+            <EmailAutocomplete value={email} onChange={setEmail} suggestions={suggestions} />
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as ShareRole)}
@@ -155,11 +141,6 @@ export function ShareDialog({
           </p>
         )}
         {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-        {canManage && suggestions.length > 0 && (
-          <p className="mt-2 text-xs text-gray-500">
-            Demo accounts: {suggestions.map((s) => s.email).join(", ")}
-          </p>
-        )}
 
         <h3 className="mt-6 mb-2 text-sm font-medium text-gray-500">People with access</h3>
         <ul className="space-y-2">
