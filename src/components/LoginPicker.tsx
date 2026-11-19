@@ -10,10 +10,10 @@ type User = { id: string; name: string; email: string; color: string };
 export function LoginPicker({ users, next }: { users: User[]; next: string }) {
   const [pending, setPending] = useState<string | null>(null);
 
-  async function signIn(userId: string) {
-    setPending(userId);
+  async function signIn(email: string) {
+    setPending(email);
     try {
-      await api("/api/session", { method: "POST", body: JSON.stringify({ userId }) });
+      await api("/api/session", { method: "POST", body: JSON.stringify({ email }) });
       // Full navigation so every server component re-renders with the new session.
       window.location.assign(next);
     } catch (e) {
@@ -35,7 +35,7 @@ export function LoginPicker({ users, next }: { users: User[]; next: string }) {
       {users.map((u) => (
         <li key={u.id}>
           <button
-            onClick={() => signIn(u.id)}
+            onClick={() => signIn(u.email)}
             disabled={pending !== null}
             className="flex w-full items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-left transition hover:border-blue-400 hover:bg-blue-50 disabled:opacity-60"
           >
@@ -44,7 +44,7 @@ export function LoginPicker({ users, next }: { users: User[]; next: string }) {
               <span className="block font-medium">{u.name}</span>
               <span className="block text-sm text-gray-500">{u.email}</span>
             </span>
-            {pending === u.id && <span className="text-sm text-gray-500">Signing in…</span>}
+            {pending === u.email && <span className="text-sm text-gray-500">Signing in…</span>}
           </button>
         </li>
       ))}
