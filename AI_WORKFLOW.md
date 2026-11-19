@@ -42,7 +42,14 @@
   - `.md` and `.docx` imports return 201;
   - Markdown export returns 200;
   - the dashboard and editor pages return 200.
-- **Manual browser pass:** login and account switching, editing and formatting with reload, the share dialog suggestions, a read-only viewer, import and export.
+- **Browser walkthrough on the live app**, scripted with Playwright driving Edge (screenshots are in `screenshots/`):
+  - create a doc, rename it and format it (H1, H2, bold, italic, underline, both list types), then reload: the formatting persists;
+  - share with Bob as editor and Carol as viewer from the email suggestions;
+  - Carol sees the doc under "Shared with me" with a read-only editor and no toolbar;
+  - Alice and Bob edit at the same time and Alice gets the conflict banner; "Load their version" brings in Bob's edit;
+  - a viewer exports to .md;
+  - importing a .docx keeps its headings, lists and marks.
+- **A UI bug the walkthrough caught:** the email suggestion list was clipped by the native `<dialog>` (its overflow). Fixed with `overflow-visible`, then re-checked with a screenshot.
 - **A deploy-only bug.** The first production deploy returned 500 on every document route. Vercel logs showed `sanitize-html` failing to `require()` the ESM-only `htmlparser2` because I had marked it as an external server package. Local Node tolerated it. Bundling it fixed the problem, and I re-ran the smoke test on production.
 - **UX review:** I read through the generated UI states and added the ones that were missing: the save indicator states, an empty-title fallback, an unsaved-changes guard on navigation, Ctrl+S, empty states on the dashboard, and the supported-file-types hint next to the import button.
 - **What I did not delegate:** the scope cuts, the access model and the conflict-handling UX were my decisions. I used AI to execute them faster and to argue against them, not to make them.
