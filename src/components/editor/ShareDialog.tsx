@@ -106,7 +106,7 @@ export function ShareDialog({
       ref={dialog}
       onClose={onClose}
       onClick={(e) => e.target === dialog.current && onClose()}
-      className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl p-0 shadow-xl backdrop:bg-black/30"
+      className="m-auto w-[calc(100%-2rem)] max-w-lg overflow-visible rounded-2xl p-0 shadow-xl backdrop:bg-black/30"
     >
       <div className="p-6">
         <div className="mb-4 flex items-center justify-between">
