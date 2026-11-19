@@ -1,0 +1,6 @@
+import { documentController } from "@/server/controllers/document.controller";
+import { withAuth } from "@/server/middlewares/with-auth";
+import { withErrors } from "@/server/middlewares/with-errors";
+
+export const runtime = "nodejs";
+export const POST = withErrors(withAuth(documentController.import));
